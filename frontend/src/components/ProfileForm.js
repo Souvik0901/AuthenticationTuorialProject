@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
 
 
-const WorkoutForm = () => {
-  const {dispatch} = useWorkoutsContext()
+
+const ProfileForm = () => {
+
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [about, setAbout] = useState('')
@@ -21,11 +21,11 @@ const WorkoutForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const workout = {username, email, about, designation,skills,education, contact, address, socialmedia}
+    const profile = {username, email, about, designation,skills,education, contact, address, socialmedia}
     
-    const response = await fetch('/api/workouts', {
+    const response = await fetch('/api/profiles', {
       method: 'POST',
-      body: JSON.stringify(workout),
+      body: JSON.stringify(profile),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -49,7 +49,7 @@ const WorkoutForm = () => {
       setContact('')
       setAddress('')
       setSocialmedia('')
-      dispatch({type: 'CREATE_WORKOUT', payload: json})
+      // dispatch({type: 'CREATE_PROFILE', payload: json})
       setEmptyFields([])
 
     }
@@ -138,4 +138,4 @@ const WorkoutForm = () => {
   )
 }
 
-export default WorkoutForm
+export default ProfileForm
