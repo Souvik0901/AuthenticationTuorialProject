@@ -21,8 +21,6 @@ const userSchema = new Schema({
 
 
 // static signup method
-
-
 userSchema.statics.signup = async function(email, password) {
 
 
