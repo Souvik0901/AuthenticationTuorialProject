@@ -17,7 +17,7 @@ const ProfileForm = () => {
   const [emptyFields, setEmptyFields] = useState([])
 
 
-
+  // this is the handle submit fuction which shows the details in browser fetching from db
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -56,6 +56,9 @@ const ProfileForm = () => {
 
   }
 
+
+
+  
   return (
     <form className="create" onSubmit={handleSubmit}> 
       <h3>Add the Profile Details</h3>
