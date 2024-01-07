@@ -3,19 +3,19 @@ const ProfileDetails = ({ profile }) => {
 
 
 
-  const handleClick = async()=>{
-    const response = await fetch('/api/profiles/'+ profile._id,{
-      method : 'DELETE'
-    })
+  // const handleClick = async()=>{
+  //   const response = await fetch('/api/profiles/'+ profile._id,{
+  //     method : 'DELETE'
+  //   })
 
-    const json = await response.json()
+  //   const json = await response.json()
 
-  }
+  // }
 
 
 
   return (
-    <div className="workout-details">
+    <div className="profile-details">
       <h4>{profile.username}</h4>
       <p><strong>EmailID : </strong>{profile.email}</p>
       <p><strong>About : </strong>{profile.about}</p>
