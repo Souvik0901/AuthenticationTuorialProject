@@ -1,14 +1,23 @@
 import { useProfilesContext } from "../hooks/useProfilesContext"
-
+import { useAuthContext } from '../hooks/useAuthContext'
 
 
 const ProfileDetails = ({ profile }) => {
 
   const { dispatch } = useProfilesContext()
+  const { user } = useAuthContext()
 
   const handleClick = async()=>{
+    if (!user) {
+      return
+    }
+
+
     const response = await fetch('/api/profiles/'+ profile._id,{
-      method : 'DELETE'
+      method : 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${user.token}`
+      }
     })
 
     const json = await response.json()
