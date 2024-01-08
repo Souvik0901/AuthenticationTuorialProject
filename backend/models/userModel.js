@@ -1,9 +1,12 @@
 const mongoose = require('mongoose')
-const bcrypt = require('bcrypt')
 const Schema = mongoose.Schema
+
+const bcrypt = require('bcrypt')
 const validator = require('validator') 
 
 
+
+//user schema
 const userSchema = new Schema({
   email: {
     type: String,
@@ -53,6 +56,8 @@ userSchema.statics.signup = async function(email, password) {
 
 
 // static login method
+
+
 userSchema.statics.login = async function(email, password) {
 
   if (!email || !password) {

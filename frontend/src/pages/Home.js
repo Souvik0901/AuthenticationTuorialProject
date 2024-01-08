@@ -1,16 +1,21 @@
-import { useEffect, useState} from "react"
+import { useEffect } from "react"
+import { useProfilesContext } from "../hooks/useProfilesContext"
 
+
+
+//Components
 import ProfileForm from "../components/ProfileForm"
 import ProfileDetails from "../components/ProfileDetails"
 
 
 
 
+
 const Home = () => {
  
-  const [profiles, setProfiles] = useState(null)
- 
 
+ 
+  const {profiles, dispatch} = useProfilesContext()
 
   // for fetching the Profile details
   useEffect(()=> {
@@ -20,12 +25,12 @@ const Home = () => {
         
 
         if(response.ok){
-          setProfiles(json)
+          dispatch({type: 'SET_PROFILES', payload: json})
         }
       } 
 
       fetchProfiles()   
-     }, [])
+     }, [dispatch])
   
 
 

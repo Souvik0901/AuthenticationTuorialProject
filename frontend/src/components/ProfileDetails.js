@@ -1,16 +1,22 @@
+import { useProfilesContext } from "../hooks/useProfilesContext"
+
+
 
 const ProfileDetails = ({ profile }) => {
 
+  const { dispatch } = useProfilesContext()
 
+  const handleClick = async()=>{
+    const response = await fetch('/api/profiles/'+ profile._id,{
+      method : 'DELETE'
+    })
 
-  // const handleClick = async()=>{
-  //   const response = await fetch('/api/profiles/'+ profile._id,{
-  //     method : 'DELETE'
-  //   })
+    const json = await response.json()
+    if(response.ok){
+      dispatch({type: 'DELETE_PROFILE', payload: json})
+    }
 
-  //   const json = await response.json()
-
-  // }
+  }
 
 
 
@@ -26,7 +32,7 @@ const ProfileDetails = ({ profile }) => {
       <p><strong>Address : </strong>{profile.address}</p>
       <p><strong>SocialMedia : </strong>{profile.socialmedia}</p>
       <p>{profile.createdAt}</p>
-      {/* <span className="material-symbols-outlined" onClick = {handleClick}>delete</span> */}
+      <span className="material-symbols-outlined" onClick = {handleClick}>delete</span>
     </div>
   )
 }

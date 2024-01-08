@@ -1,9 +1,9 @@
 import { useState } from 'react'
-
+import { useProfilesContext } from '../hooks/useProfilesContext'
 
 
 const ProfileForm = () => {
-
+  const {dispatch} = useProfilesContext()
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [about, setAbout] = useState('')
@@ -49,7 +49,7 @@ const ProfileForm = () => {
       setContact('')
       setAddress('')
       setSocialmedia('')
-      // dispatch({type: 'CREATE_PROFILE', payload: json})
+      dispatch({type: 'CREATE_PROFILE', payload: json})
       setEmptyFields([])
 
     }
