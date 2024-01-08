@@ -11,20 +11,26 @@ const {
 
 } = require('../controllers/profileController')
 
+const requireAuth = require('../middleware/requireAuth')
 
-//GET all workouts
+
+// requireauth for all profile routes
+router.use(requireAuth)
+
+
+//GET all profiles
 router.get('/', getProfiles)
 
-// GET a single workout
+// GET a single profile
 router.get('/:id', getProfile)
 
-// POST a new workout
+// POST a new profile
 router.post('/', createProfile)
 
-// DELETE a workout
+// DELETE a profile
 router.delete('/:id', deleteProfile)
 
-// UPDATE a workout
+// UPDATE a profile
 router.patch('/:id', updateProfile)
 
 module.exports= router

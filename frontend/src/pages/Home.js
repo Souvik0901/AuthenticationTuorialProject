@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useProfilesContext } from "../hooks/useProfilesContext"
-
+import { useAuthContext } from "../hooks/useAuthContext"
 
 
 //Components
@@ -16,11 +16,15 @@ const Home = () => {
 
  
   const {profiles, dispatch} = useProfilesContext()
+  const {user} = useAuthContext()
 
   // for fetching the Profile details
   useEffect(()=> {
       const fetchProfiles = async () => {
-        const response = await fetch('/api/profiles')
+        const response = await fetch('/api/profiles',{
+          headers: {'Authorization': `Bearer ${user.token}`},
+
+        })
         const json = await response.json()
         
 
@@ -29,8 +33,12 @@ const Home = () => {
         }
       } 
 
-      fetchProfiles()   
-     }, [dispatch])
+      if(user){
+         
+        fetchProfiles()  
+      }
+ 
+     }, [dispatch, user])
   
 
 
