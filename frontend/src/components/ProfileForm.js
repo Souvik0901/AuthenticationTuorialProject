@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { useProfilesContext } from '../hooks/useProfilesContext'
-
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const ProfileForm = () => {
   const {dispatch} = useProfilesContext()
+  const { user } = useAuthContext()
+
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [about, setAbout] = useState('')
@@ -21,13 +23,20 @@ const ProfileForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+
+    if (!user) {
+      setError('You must be logged in')
+      return
+    }
+
     const profile = {username, email, about, designation,skills,education, contact, address, socialmedia}
     
     const response = await fetch('/api/profiles', {
       method: 'POST',
       body: JSON.stringify(profile),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.token}`
       }
 
     })
