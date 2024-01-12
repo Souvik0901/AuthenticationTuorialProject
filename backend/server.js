@@ -1,9 +1,12 @@
 
 require('dotenv').config()
 const express = require('express')
+const mongoose = require('mongoose')
+
+
 const profileRoutes = require('./routes/profiles')
 const userRoutes = require('./routes/user')
-const mongoose = require('mongoose')
+
 
 //express app
 const app = express()

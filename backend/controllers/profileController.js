@@ -4,16 +4,20 @@ const mongoose = require('mongoose')
 
 
 
-// get all workouts
+// get all profiles
 const getProfiles = async(req,res)=>{
-   
-    const profiles = await Profile.find({}).sort({createAt:-1})
+    
+
+    const user_id = req.user._id
+
+
+    const profiles = await Profile.find({user_id}).sort({createAt:-1})
     res.status(200).json(profiles)
 }
 
 
 
-// get a single workout
+// get a single profile
 const getProfile = async (req, res) => {
   const { id } = req.params
 
@@ -35,7 +39,7 @@ const getProfile = async (req, res) => {
 
 
 
-// create a new workout
+// create a new profile
 const createProfile = async(req,res)=>{
   const {username, email, about, designation,skills,education, contact, address, socialmedia} = req.body
   let emptyFields = []
@@ -85,7 +89,8 @@ const createProfile = async(req,res)=>{
 
     //add doc to db
   try {
-    const profile = await Profile.create({username, email, about, designation,skills,education, contact, address, socialmedia})
+    const user_id = req.user._id
+    const profile = await Profile.create({username, email, about, designation,skills,education, contact, address, socialmedia, user_id})
     res.status(200).json(profile)
   } catch (error) {
     res.status(400).json({error: error.message})
@@ -95,7 +100,7 @@ const createProfile = async(req,res)=>{
 
 
 
-// delete a workout
+// delete a profile
 const deleteProfile = async (req, res) => {
   const { id } = req.params
 
@@ -114,7 +119,7 @@ const deleteProfile = async (req, res) => {
 }
 
 
-// update a workout
+// update a profile
 const updateProfile = async (req, res) => {
   const { id } = req.params
 
