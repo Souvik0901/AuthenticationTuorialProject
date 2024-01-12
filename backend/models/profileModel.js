@@ -40,6 +40,11 @@ const profileSchema = new Schema({
   socialmedia:{
     type: String,
     required: true
+  },
+
+  user_id:{
+     type: String,
+     required: true
   }
 }, { timestamps: true })
 
