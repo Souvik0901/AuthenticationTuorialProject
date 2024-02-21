@@ -1,4 +1,5 @@
 const Profile = require('../models/profileModel')
+const ProfileImage = require('../models/profileImageModel')
 const mongoose = require('mongoose')
 
 
@@ -6,11 +7,7 @@ const mongoose = require('mongoose')
 
 // get all profiles
 const getProfiles = async(req,res)=>{
-    
-
     const user_id = req.user._id
-
-
     const profiles = await Profile.find({user_id}).sort({createAt:-1})
     res.status(200).json(profiles)
 }
@@ -138,7 +135,17 @@ const updateProfile = async (req, res) => {
   res.status(200).json(profile)
 }
 
+const uploadImage = async(req,res)=>{
+   const imageurl = `/api/profiles/images/${req.file.filename}`;
 
+   const  profileimage = new ProfileImage({
+    userimage: imageurl
+   })
+
+   await profileimage.save();
+
+   return res.status(200).json(profileimage)
+}
 
 
 module.exports = {
@@ -146,5 +153,6 @@ module.exports = {
   getProfile,
   createProfile,
   deleteProfile,
-  updateProfile
+  updateProfile,
+  uploadImage
 }
