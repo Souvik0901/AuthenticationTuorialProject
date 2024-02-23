@@ -16,10 +16,10 @@ const {
 const { uploadImageToS3 } = require('../controllers/uploadImageToS3'); // Import uploadImageToS3 function
 
 
-const requireAuth = require('../middleware/requireAuth')
+// const requireAuth = require('../middleware/requireAuth')
 
 // requireauth for all profile routes
-router.use(requireAuth)
+// router.use(requireAuth)
 
 
 // Configure multer for file upload
@@ -45,5 +45,7 @@ router.patch('/:id', updateProfile)
 
 // Upload an image to S3
 router.post('/upload-image', upload.single('image'), uploadImageToS3); // Define route for uploading image to S3
+
+
 
 module.exports= router

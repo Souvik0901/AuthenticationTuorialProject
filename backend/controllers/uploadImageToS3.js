@@ -1,5 +1,6 @@
 const AWS = require('aws-sdk');
 const { v4 } = require('uuid');
+const ProfileImage = require('../models/profileImageModel');
 
 // Initialize S3
 const s3 = new AWS.S3({
@@ -9,31 +10,40 @@ const s3 = new AWS.S3({
 
 const uploadImageToS3 = async (req, res, next) => {
   try {
-    // Extract file details from the request
     const file = req.file;
     
-    // Create a unique filename for the image using UUID
     const fileName = v4() + '_' + file.originalname;
 
-    // Set up parameters for S3 upload
     const params = {
       Bucket: process.env.AWS_BUCKET_NAME,
       Key: fileName,
-      Body: file.buffer, // Use buffer instead of path for multer memory storage
+      Body: file.buffer, 
       ContentType: file.mimetype
     };
 
-    // Upload image to S3
     const uploadResult = await s3.upload(params).promise();
 
-    // Return the S3 URL of the uploaded image
-    res.json({ imageUrl: uploadResult.Location });
+    // Create a new profile image document in MongoDB
+    const newProfileImage = new ProfileImage({
+      userimage: uploadResult.Location
+    });
+
+    // Save the profile image document to the database
+    const savedProfileImage = await newProfileImage.save();
+
+
+    res.json({ 
+      imageUrl: uploadResult.Location,
+      imageId: savedProfileImage._id
+    });
   } catch (err) {
-    console.error('Error uploading image to S3:', err);
+    console.error('Error uploading image to S3 and saving to DB:', err);
     res.status(500).json({ error: 'Failed to upload image' });
   }
 };
 
+
+
 module.exports = {
-  uploadImageToS3
+  uploadImageToS3,
 };
